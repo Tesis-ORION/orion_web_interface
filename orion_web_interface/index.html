@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROS 2 Web Interface</title>
+    <script src="https://cdn.jsdelivr.net/npm/roslib@1/build/roslib.min.js"></script>
+</head>
+<body>
+    <h2>Texto Recibido:</h2>
+    <p id="speech-text">Esperando datos...</p>
+    <input type="text" id="speech-input">
+    <button onclick="publishSpeech()">Enviar</button>
+
+    <h2>Imagen de Profundidad:</h2>
+    <img id="depth-image" width="640px">
+
+    <script>
+        var ros = new ROSLIB.Ros({
+            url: 'ws://localhost:9090'
+        });
+
+        ros.on('connection', function() {
+            console.log('Conectado a ROS 2');
+        });
+
+        var speechTopic = new ROSLIB.Topic({
+            ros: ros,
+            name: '/speech',
+            messageType: 'std_msgs/String'
+        });
+
+        speechTopic.subscribe(function(message) {
+            document.getElementById("speech-text").innerText = message.data;
+        });
+
+        function publishSpeech() {
+            var text = document.getElementById("speech-input").value;
+            var message = new ROSLIB.Message({ data: text });
+            speechTopic.publish(message);
+        }
+
+        function updateDepthImage() {
+            fetch('http://localhost:8000/depth_image.txt')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('depth-image').src = "data:image/jpeg;base64," + data;
+                })
+                .catch(err => console.error("Error cargando imagen:", err));
+        }
+        
+        setInterval(updateDepthImage, 100);
+    </script>
+</body>
+</html>
