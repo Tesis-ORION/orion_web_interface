@@ -1,34 +1,58 @@
+#!/usr/bin/env python3
+
 import rclpy
 from rclpy.node import Node
-from std_msgs.msg import String
 from sensor_msgs.msg import Image
-from cv_bridge import CvBridge
+from std_msgs.msg import String
 import cv2
 import base64
+import numpy as np
 
-class WebInterface(Node):
+class ImageToBase64Node(Node):
     def __init__(self):
-        super().__init__('web_interface')
-        self.speech_pub = self.create_publisher(String, '/speech', 10)
-        self.speech_sub = self.create_subscription(String, '/speech', self.speech_callback, 10)
-        self.depth_sub = self.create_subscription(Image, '/depth', self.depth_callback, 10)
-        self.bridge = CvBridge()
-        self.depth_image_base64 = ""
+        super().__init__('image_to_base64')
 
-    def speech_callback(self, msg):
-        self.get_logger().info(f"Recibido: {msg.data}")
+        # Obtener parámetros del launch
+        self.declare_parameter("input_topic", "/apc/left/image_color")
+        self.declare_parameter("output_topic", "/apc/left/image_base64")
 
-    def depth_callback(self, msg):
-        cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding="passthrough")
-        _, buffer = cv2.imencode('.jpg', cv_image)
-        self.depth_image_base64 = base64.b64encode(buffer).decode('utf-8')
+        self.input_topic = self.get_parameter("input_topic").value
+        self.output_topic = self.get_parameter("output_topic").value
 
-        with open("/tmp/depth_image.txt", "w") as f:
-            f.write(self.depth_image_base64)
+        self.get_logger().info(f"📡 Suscrito a {self.input_topic}, publicando en {self.output_topic}")
+
+        # Suscribirse al tópico de imagen
+        self.subscription = self.create_subscription(
+            Image,
+            self.input_topic,
+            self.image_callback,
+            10
+        )
+
+        # Publicador de la imagen en Base64
+        self.publisher = self.create_publisher(String, self.output_topic, 10)
+
+    def image_callback(self, msg):
+        try:
+            # Convertir la imagen de ROS 2 a OpenCV
+            np_arr = np.frombuffer(msg.data, dtype=np.uint8).reshape((msg.height, msg.width, 3))
+            img_bgr = np_arr[:, :, ::-1]  # Convertir de BGR a RGB
+
+            # Comprimir la imagen en JPEG y codificarla en Base64
+            _, buffer = cv2.imencode('.jpg', img_bgr)
+            base64_str = base64.b64encode(buffer).decode('utf-8')
+
+            # Publicar la imagen en Base64
+            msg_out = String()
+            msg_out.data = base64_str
+            self.publisher.publish(msg_out)
+
+        except Exception as e:
+            self.get_logger().error(f"❌ Error procesando imagen: {str(e)}")
 
 def main(args=None):
     rclpy.init(args=args)
-    node = WebInterface()
+    node = ImageToBase64Node()
     rclpy.spin(node)
     node.destroy_node()
     rclpy.shutdown()

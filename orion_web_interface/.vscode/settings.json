@@ -1,0 +1,12 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/miguel/ros2_ws/install/orion_web_interface/lib/python3.12/site-packages",
+        "/home/miguel/ros2_ws/install/emotion_detector/lib/python3.12/site-packages",
+        "/opt/ros/jazzy/lib/python3.12/site-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/miguel/ros2_ws/install/orion_web_interface/lib/python3.12/site-packages",
+        "/home/miguel/ros2_ws/install/emotion_detector/lib/python3.12/site-packages",
+        "/opt/ros/jazzy/lib/python3.12/site-packages"
+    ]
+}
