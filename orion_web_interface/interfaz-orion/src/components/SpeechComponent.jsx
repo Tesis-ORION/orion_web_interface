@@ -20,7 +20,12 @@ const SpeechComponent = () => {
     return () => speechTopic.unsubscribe();
   }, []);
 
-  return <div className="border p-3">{speechText}</div>;
+  return (
+    <div className="border p-3">
+      <h5 className="text-center image-box-title">Tópico Speech</h5>
+      <div className="speech-box">{speechText}</div>
+    </div>
+  );
 };
 
 export default SpeechComponent;
