@@ -6,7 +6,7 @@ const FooterComponent = () => {
   const [online, setOnline] = useState(false);
 
   useEffect(() => {
-    const ros = new ROSLIB.Ros({ url: "ws://localhost:9090" });
+    const ros = new ROSLIB.Ros({ url: import.meta.env.VITE_ROS_URL });
 
     ros.on("connection", () => {
       console.log("✅ Conectado a ROS 2");
@@ -26,7 +26,7 @@ const FooterComponent = () => {
       <Container>
         <Row className="text-center">
           <Col md={4}>
-            <p>© 2025 ROS 2 Dashboard</p>
+            <p>© 2025 ORION Dashboard</p>
           </Col>
           <Col md={4}>
             <p>

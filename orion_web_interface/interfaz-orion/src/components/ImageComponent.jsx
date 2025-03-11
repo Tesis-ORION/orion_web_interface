@@ -10,7 +10,7 @@ const ImageComponent = ({ title, topic }) => {
       return;
     }
 
-    const ros = new ROSLIB.Ros({ url: "ws://localhost:9090" });
+    const ros = new ROSLIB.Ros({ url: import.meta.env.VITE_ROS_URL });
 
     const imageListener = new ROSLIB.Topic({
       ros,

@@ -5,7 +5,7 @@ const SpeechComponent = () => {
   const [speechText, setSpeechText] = useState("Esperando datos...");
 
   useEffect(() => {
-    const ros = new ROSLIB.Ros({ url: "ws://localhost:9090" });
+    const ros = new ROSLIB.Ros({ url: import.meta.env.VITE_ROS_URL });
 
     const speechTopic = new ROSLIB.Topic({
       ros: ros,
