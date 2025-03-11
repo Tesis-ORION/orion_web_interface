@@ -24,6 +24,7 @@ setup(
     entry_points={
         'console_scripts': [
             "backend = orion_web_interface.backend:main",
+            "point_cloud = orion_web_interface.point_cloud:main",
         ],
     },
 )

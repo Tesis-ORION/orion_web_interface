@@ -1,4 +1,6 @@
-/* Estilos generales */
+/* ========================= */
+/* ESTILOS GENERALES */
+/* ========================= */
 body {
   margin: 0;
   padding: 0;
@@ -9,30 +11,67 @@ body {
   align-items: center;
 }
 
-/* Navbar */
+/* ========================= */
+/* NAVBAR */
+/* ========================= */
 .navbar {
   width: 100vw;
-  background-color: #7a1335; /* O el color que estés usando */
-  padding: 15px;
-  text-align: center;
+  background-color: #7a1335; /* Color vinotinto */
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between; /* Alineación: título a la izquierda, menú a la derecha */
+  align-items: center;
   color: white;
   font-weight: bold;
   position: fixed;
   top: 0;
   left: 0;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px; /* Ajusta el valor según sea necesario */
+  
 }
 
-/* Contenedor principal */
-.container {
+.navbar-title {
+  font-size: 24px;
+  color: white !important;
+}
+
+.navbar-menu {
+  display: flex;
+  gap: 20px; /* Espacio entre enlaces */
+  font-size: 18px;
+}
+
+.navbar-menu a {
+  color: white !important;
+  text-decoration: none;
+  padding: 0 20px; /* Más separación */
+}
+
+.nav-link {
+  color: white !important;
+}
+
+.navbar-menu a:hover {
+  color: #d88a9c; /* Color al pasar el mouse */
+}
+
+/* ========================= */
+/* CONTENEDOR PRINCIPAL */
+/* ========================= */
+.main-container {
+  padding-top: 70px; /* Espacio para que el contenido no quede oculto por la navbar */
+  padding-bottom: 50px; /* Espacio para evitar que el footer cubra contenido */
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 80%;
   max-width: 1000px;
-  margin-top: 20px;
 }
 
-/* Tópico de texto */
+/* ========================= */
+/* CUADRO DE TEXTO (Speech Box) */
+/* ========================= */
 .speech-box {
   background-color: #d9a5b3;
   color: #5f2167;
@@ -42,9 +81,12 @@ body {
   text-align: center;
   font-size: 18px;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  margin-bottom: 40px; /* Ajusta el valor según sea necesario */
 }
 
-/* Contenedor de imágenes */
+/* ========================= */
+/* SECCIÓN DE IMÁGENES */
+/* ========================= */
 .image-container {
   display: flex;
   justify-content: center;
@@ -53,13 +95,12 @@ body {
   width: 100%;
 }
 
-/* Tarjetas de imágenes */
 .image-box {
   background-color: white;
-  padding: 20px; /* Más espacio interno */
+  padding: 20px;
   border-radius: 15px;
-  width: 48%; /* Casi la mitad del contenedor */
-  height: 400px; /* Más alto */
+  width: 48%;
+  height: 400px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -68,52 +109,65 @@ body {
   text-align: center;
   color: #5F2167;
   font-weight: bold;
-  font-size: 22px; /* Aumenta el tamaño del texto */
-}
-
-/* Footer */
-.footer {
-  width: 100vw;
-  background-color: #4c0e49; /* Color del footer */
-  padding: 15px;
-  text-align: center;
-  color: white;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-}
-
-.speech-container {
-  width: 80%; /* Aumenta el ancho */
-  max-width: 600px; /* Puedes ajustar este valor según el diseño */
-  margin: 20px auto;
-  background-color: #d88a9c; /* Color de fondo */
-  padding: 20px;
-  text-align: center;
-  border-radius: 10px; /* Bordes redondeados */
-}
-
-.vision-topic {
-  border-radius: 15px; /* Ajusta según lo redondeado que quieras */
-  overflow: hidden; /* Para evitar que las imágenes sobresalgan */
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); /* Agrega un ligero sombreado */
-}
-
-.main-container {
-  padding-top: 60px; /* Ajusta según la altura de la navbar */
-  padding-bottom: 50px; /* Ajusta según la altura del footer */
+  font-size: 22px;
 }
 
 .image-box img {
-  width: 100%; /* Ajusta el ancho de la imagen al 100% del contenedor */
-  max-width: 500px; /* Establece un ancho máximo para las imágenes */
+  width: 100%;
+  max-width: 500px;
   border-radius: 10px;
   object-fit: contain;
-  height: auto; /* Mantén la proporción de la imagen */
+  height: auto;
 }
 
 .image-box-title {
-  font-size: 24px;  /* Aumenta el tamaño del título */
+  font-size: 24px;
   font-weight: bold;
-  margin-bottom: 10px; /* Espacio entre el título y la imagen */
+  margin-bottom: 10px;
+  color: #5F2167;
+}
+
+/* ========================= */
+/* CONTENEDOR DE TEXTO ADICIONAL */
+/* ========================= */
+.speech-container {
+  width: 80%;
+  max-width: 600px;
+  margin: 20px auto;
+  background-color: #d88a9c;
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+/* ========================= */
+/* TARJETAS DE VISIÓN */
+/* ========================= */
+.vision-topic {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ========================= */
+/* FOOTER */
+/* ========================= */
+.footer {
+  background-color: #4c0e49;
+  color: white;
+  padding: 15px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.footer a {
+  color: #bbb;
+  margin: 0 10px;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: white;
 }

@@ -2,7 +2,7 @@ import ROSLIB from "roslib";
 
 // Conectar a ROSBridge
 const ros = new ROSLIB.Ros({
-    url: "ws://localhost:9090"  // Asegúrate de que este puerto es el correcto
+    url: import.meta.env.VITE_ROS_URL  // Asegúrate de que este puerto es el correcto
 });
 
 // Manejo de errores y conexión
