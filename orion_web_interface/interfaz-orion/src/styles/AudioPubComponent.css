@@ -1,0 +1,35 @@
+.audio-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .record-button {
+    width: 100px !important;
+    height: 100px !important;
+    border-radius: 50% !important;
+    background-color: #d88a9c !important;
+    border: none !important;
+    outline: none !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0 !important;
+  }
+  
+  .record-button.recording {
+    background-color: #7a1335 !important;
+  }
+  
+  .microphone-icon {
+    font-size: 2em;
+    color: white;
+  }
+  
+  .button-text {
+    margin-top: 10px;
+    font-size: 16px;
+    text-align: center;
+  }
+  
