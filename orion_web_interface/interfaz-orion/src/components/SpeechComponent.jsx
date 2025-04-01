@@ -9,12 +9,21 @@ const SpeechComponent = () => {
 
     const speechTopic = new ROSLIB.Topic({
       ros: ros,
-      name: "/speech",
-      messageType: "std_msgs/String",
+      name: "/orion_response",
+      messageType: "std_msgs/msg/String",
     });
 
     speechTopic.subscribe((message) => {
-      setSpeechText(message.data);
+      setSpeechText((prevText) => {
+        if (message.data.startsWith("[ORION]:")) {
+          // Se reinicia el mensaje al detectar "[ORION]:"
+          return message.data;
+        } else {
+          // Se concatena el mensaje actual al texto previo
+          // Si es el primer mensaje, se elimina "Esperando datos..."
+          return prevText === "Esperando datos..." ? message.data : prevText + " " + message.data;
+        }
+      });
     });
 
     return () => speechTopic.unsubscribe();
