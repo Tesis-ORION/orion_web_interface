@@ -1,0 +1,27 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Splash from "../components/splash.astro";
+import Intro from "../components/intro.astro";
+import Features from "../components/features.astro";
+import Compatibility from "../components/compatibility.astro";
+---
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Importa la fuente Bruno Ace SC desde Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&display=swap" rel="stylesheet">
+    <title>Prueba de Header Flotante</title>
+  </head>
+  <body>
+    <Header />
+    <Splash />
+    <div class="space-y-24 px-8 py-32">
+      <Intro />
+      <Features />
+      <Compatibility />
+    </div>
+  </body>
+</html>
