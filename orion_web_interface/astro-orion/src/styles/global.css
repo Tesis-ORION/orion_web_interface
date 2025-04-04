@@ -1,14 +1,87 @@
 @import 'tailwindcss';
 
-/* TODO: consider creating <Button> and <GradientText> components */
+/* Estilos globales personalizados */
 a,
 .btn {
   @apply transition-colors duration-200;
-  @apply hover:text-secondary;
-  @apply focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-transparent;
+  /* Se remueven las utilidades de Tailwind que dependen de la configuración */
+  /* @apply hover:text-secondary; */
+  /* @apply focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-transparent; */
+  @apply focus:outline-none;
 }
+
+/* Definir el hover usando la variable del color secundario */
+a:hover,
+.btn:hover {
+  color: var(--color-secondary);
+}
+
+/* Definir el focus (ring) usando la variable del color secundario */
+a:focus,
+.btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px transparent, 0 0 0 4px var(--color-secondary);
+}
+
+.text-shadow {
+  filter: drop-shadow(2px 2px 4px rgba(255, 255, 255, 0.6));
+}
+
+
 
 .gradient-text {
   @apply bg-clip-text text-transparent;
-  @apply bg-gradient-to-br from-indigo-500 via-fuchsia-500 to-pink-500;
+  @apply bg-gradient-to-br from-[#800020] via-[#990A2C] to-[#990A2C];
 }
+
+
+/* Variables de tema para light y dark */
+[data-theme="light"] {
+  --color-primary: theme("colors.pink.500");
+  --color-secondary: theme("colors.indigo.500");
+  --color-text: theme("colors.gray.900");
+  --color-text-offset: theme("colors.gray.600");
+  --color-background: theme("colors.gray.50");
+  --color-background-offset: theme("colors.gray.100");
+  --color-border: theme("colors.gray.900/10");
+  --header-background: rgba(255, 255, 255, 0.9);
+  --header-border: #000; /* o el color que prefieras */
+  --icon-color: #000;
+}
+
+[data-theme="dark"] {
+  --color-primary: theme("colors.pink.400");
+  --color-secondary: theme("colors.indigo.400");
+  --color-text: theme("colors.gray.50");
+  --color-text-offset: theme("colors.gray.400");
+  --color-background: theme("colors.gray.900");
+  --color-background-offset: theme("colors.gray.800");
+  --color-border: theme("colors.gray.50/10");
+  --header-background: rgba(31, 41, 59, 0.9); /* Un fondo oscuro */
+  --header-border: #333; /* O ajusta según prefieras */
+  --icon-color: #fff;
+}
+
+.icon-astro {
+  color: var(--icon-color);
+}
+
+.tool-bg {
+  background-color: var(--color-background);
+}
+
+.tool-border {
+  border-color: var(--color-border);
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  transition: background-color 0.3s, color 0.3s; /* Para una transición suave */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+

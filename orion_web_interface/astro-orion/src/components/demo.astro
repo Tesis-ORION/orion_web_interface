@@ -1,0 +1,30 @@
+---
+import { getCollection } from "astro:content";
+import ContentSection from "../components/content-section.astro";
+import ShowcaseCard from "../components/demo-card.astro";
+
+const featuredSites = await getCollection(
+  "demo",
+  ({ data }) => "featured" in data,
+);
+const orderedSites = featuredSites.sort(
+  (a, b) => a.data.featured! - b.data.featured!,
+);
+---
+
+<ContentSection title="Demo" id="demo">
+  <Fragment slot="lead">
+    Orion tiene una demostracion que puedes probar tu mismo o ver las <span class="gradient-text">fotos</span> y <span class="gradient-text">videos </span> de las pruebas relizadas
+    para que comiences aventura y aprendizaje.
+  </Fragment>
+  <div class="max-w-6xl space-y-2">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {orderedSites.map((site) => <ShowcaseCard site={site} />)}
+    </div>
+    <p class="text-right text-sm">
+      <a class="text-primary" href="https://astro.build/showcase/">
+        ...and more &rarr;
+      </a>
+    </p>
+  </div>
+</ContentSection>

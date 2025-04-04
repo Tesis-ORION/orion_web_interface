@@ -7,13 +7,13 @@ const features: Array<FeatureItem> = [
   {
     title: "Procesamiento de lenguaje natural.",
     description:
-      "Atravez de microfonos o texto Orion puede tener conversaciones y seguir comandos a tra vez del lenguage natural de cualquier persona.",
+      "Atravez de microfonos o texto Orion puede tener conversaciones y seguir comandos a traves del lenguage natural de cualquier persona.",
     icon: "mdi:account-plus",
   },
   {
     title: "Vision por computadora.",
     description:
-      "Orion cuenta con camaras de profundidad y sensores que le permiten identificar su entorno y atravez de IA interactuar con el.",
+      "Orion cuenta con camaras de profundidad y sensores que le permiten identificar su entorno y atraves de IA interactuar con el.",
     icon: "mdi:television-ambient-light",
   },
   {
@@ -27,8 +27,8 @@ const features: Array<FeatureItem> = [
 
 <ContentSection title="Features" id="features">
   <Fragment slot="lead">
-    Orion tiene 3 funciones principales para la Interaccion Humano-robot,
-    estas 3 funciones pueden ser probadas en la demo actual del proyecto.
+    Orion tiene 3 funciones principales para la Interaccion  <span class="gradient-text">Humano-robot</span>,
+    estas 3 funciones pueden ser probadas en la <span class="gradient-text">demo</span>demo actual del proyecto.
   </Fragment>
   <ul class="grid max-w-6xl grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
     {
@@ -37,7 +37,7 @@ const features: Array<FeatureItem> = [
           <div class="size-16 rounded-full border-2 border-current p-3">
             <Icon name={icon} class="size-full" />
           </div>
-          <p class="text-center font-extrabold text-xl">{title}</p>
+          <p class="text-center font-extrabold text-xl gradient-text">{title}</p>
           <p class="text-center text-offset text-sm">{description}</p>
         </li>
       ))

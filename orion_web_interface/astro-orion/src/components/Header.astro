@@ -1,28 +1,41 @@
 ---
+import ThemeSwitcher from '../components/theme-switcher.astro';
 import { Image } from 'astro:assets';
 ---
 
 <style>
-  /* Fuente Bruno Ace SC */
-  .font-bruno {
-    font-family: 'Bruno Ace SC', cursive;
+  /* Fuente zen */
+  .font-zen {
+    font-family: "Zen Dots", sans-serif;
+    font-weight: 400;
+    font-style: normal;
   }
   /* Estilos para el recuadro del header */
   .header-box {
-    background: rgba(255, 255, 255, 0.9);
+    background: var(--header-background);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(5px);
+    border: 1px solid var(--header-border);
   }
 </style>
 
-<header class="fixed top-0 left-0 right-0 z-50">
-  <!-- El header externo es transparente sin padding -->
+<header id="page-header" class="fixed top-0 left-0 right-0 z-50">
   <div class="container mx-auto px-4 mt-4">
-    <!-- El recuadro interno es el que tiene fondo, borde y sombra -->
-    <div class="header-box flex justify-between items-center py-4 px-4 rounded-lg border border-black">
-      <a href="/" data-view-transition class="flex items-center uppercase font-bold transition-colors duration-200 font-bruno text-red-500">
+    <div class="header-box flex justify-between items-center py-4 px-4 rounded-lg">
+      <!-- Al hacer clic en "orion" se desplaza al inicio de la página -->
+      <a href="#top" data-view-transition class="flex items-center uppercase font-bold transition-colors duration-200 font-zen text-[#990A2C]">
         orion
       </a>
+      <!-- Nav items con la misma fuente -->
+      <nav class="hidden md:block">
+        <ul class="flex items-right gap-6">
+          <li><a class="text-sm font-zen" href="#intro">Descripcion</a></li>
+          <li><a class="text-sm font-zen" href="#features">Features</a></li>
+          <li><a class="text-sm font-zen" href="#tools">Herramientas</a></li>
+          <li><a class="text-sm font-zen" href="#demo">Demo</a></li>
+        </ul>
+      </nav>
+      <ThemeSwitcher />
     </div>
   </div>
 </header>

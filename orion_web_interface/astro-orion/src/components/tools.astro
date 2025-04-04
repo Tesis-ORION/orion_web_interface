@@ -1,5 +1,5 @@
 ---
-import CompatibilityList from "../components/compatibility-list.astro";
+import CompatibilityList from "../components/tool-list.astro";
 import ContentSection from "../components/content-section.astro";
 import type { CompatibilityItem } from "../types";
 
@@ -11,12 +11,12 @@ const frameworks: Array<CompatibilityItem> = [
   },
   {
     title: "Astro",
-    icon: "frameworks/astro",
+    icon: "lineicons:astro",
     url: "https://astro.build/",
   },
   {
     title: "Ros2",
-    icon: "frameworks/ros-seeklogo",
+    icon: "skill-icons:ros-light",
     url: "https://docs.ros.org/en/jazzy/index.html",
   },
 ];
@@ -35,11 +35,10 @@ const platforms: Array<CompatibilityItem> = [
 ];
 ---
 
-<ContentSection title="Compatibility" id="compatibility">
+<ContentSection title="Herramientas" id="tools">
   <Fragment slot="lead">
-    Astro <span class="text-primary">plays nice</span>. Bring your own UI{" "}
-    <span class="text-primary">framework</span>
-    and deploy to your favorite <span class="text-primary">platform</span>.
+    El proyecto Orion esta construido con herramientas de uso <span class="gradient-text">gratuito</span> 
+    para que cualquier persona pueda aprender y contribuir al proyecto.
   </Fragment>
   <CompatibilityList
     items={frameworks}
@@ -48,7 +47,7 @@ const platforms: Array<CompatibilityItem> = [
   />
   <CompatibilityList
     items={platforms}
-    title="Platforms"
+    title="Platformas"
     url=""
   />
 </ContentSection>
