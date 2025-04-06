@@ -1,0 +1,21 @@
+---
+const { post } = Astro.props;
+const url = `https://github.com/${post.data.github}`;
+---
+<a
+  href={url}
+  target="_blank"
+  rel="noopener"
+  class="card slide-up-init block p-4 border rounded hover:shadow-lg transition-shadow"
+>
+  <img
+    src={post.data.img}
+    alt={`Foto de ${post.data.name}`}
+    class="w-32 h-32 rounded-full mx-auto p-3"
+  />
+  <h2 class="text-xl font-bold text-center mt-2">{post.data.name}</h2>
+  <div class="text-center text-lg font-bold text-gray-700">
+    {post.data.careers.join(', ')}
+  </div>
+  <p class="text-center mt-2">{post.data.description}</p>
+</a>

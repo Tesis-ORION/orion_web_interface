@@ -2,19 +2,16 @@
   <canvas id="starfield-canvas"></canvas>
 </div>
 
-<script>
-  import invariant from "tiny-invariant";
+<script is:inline>
+  // Función simple de invariant (sin dependencias externas)
+  function invariant(condition, message) {
+    if (!condition) throw new Error(message);
+  }
 
   const COUNT = 800;
   const SPEED = 0.1;
 
   class Star {
-    x: number;
-    y: number;
-    z: number;
-    xPrev: number;
-    yPrev: number;
-
     constructor(x = 0, y = 0, z = 0) {
       this.x = x;
       this.y = y;
@@ -23,7 +20,7 @@
       this.yPrev = y;
     }
 
-    update(width: number, height: number, speed: number) {
+    update(width, height, speed) {
       this.xPrev = this.x;
       this.yPrev = this.y;
       this.z += speed * 0.0675;
@@ -43,7 +40,7 @@
       }
     }
 
-    draw(ctx: CanvasRenderingContext2D) {
+    draw(ctx) {
       ctx.lineWidth = this.z;
       ctx.beginPath();
       ctx.moveTo(this.x, this.y);
@@ -52,54 +49,86 @@
     }
   }
 
+  // Crear las estrellas una sola vez
   const stars = Array.from({ length: COUNT }, () => new Star(0, 0, 0));
   let rafId = 0;
+  let resizeObserver;
 
-  const canvas = document.querySelector(
-    "#starfield-canvas",
-  ) as HTMLCanvasElement;
-  invariant(canvas, "canvas should not be null");
-  const ctx = canvas.getContext("2d");
+  function initStarfield() {
+    // Cancelar cualquier animación previa
+    if (rafId > 0) cancelAnimationFrame(rafId);
 
-  const container = document.querySelector("#starfield") as HTMLElement;
-  invariant(container, "container should not be null");
-  const resizeObserver = new ResizeObserver(setup);
-  resizeObserver.observe(container);
-
-  function setup() {
+    const canvas = document.querySelector("#starfield-canvas");
+    invariant(canvas, "canvas should not be null");
+    const ctx = canvas.getContext("2d");
     invariant(ctx, "canvas context should not be null");
-    rafId > 0 && cancelAnimationFrame(rafId);
 
-    const { clientWidth: width, clientHeight: height } = container;
-    const dpr = window.devicePixelRatio || 1;
-    canvas.width = width * dpr;
-    canvas.height = height * dpr;
-    canvas.style.width = `${width}px`;
-    canvas.style.height = `${height}px`;
-    ctx.scale(dpr, dpr);
+    const container = document.querySelector("#starfield");
+    invariant(container, "container should not be null");
 
-    for (const star of stars) {
-      star.x = Math.random() * width - width / 2;
-      star.y = Math.random() * height - height / 2;
-      star.z = 0;
+    // Si ya existía un ResizeObserver, desconectarlo para evitar duplicados
+    if (resizeObserver) {
+      resizeObserver.disconnect();
+    }
+    resizeObserver = new ResizeObserver(setup);
+    resizeObserver.observe(container);
+
+    setup();
+
+    function setup() {
+      invariant(ctx, "canvas context should not be null");
+      if (rafId > 0) cancelAnimationFrame(rafId);
+
+      const { clientWidth: width, clientHeight: height } = container;
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+
+      // Reinicia la transformación del contexto
+      if (ctx.resetTransform) {
+        ctx.resetTransform();
+      } else {
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+      }
+      ctx.scale(dpr, dpr);
+
+      // Reposicionar las estrellas
+      for (const star of stars) {
+        star.x = Math.random() * width - width / 2;
+        star.y = Math.random() * height - height / 2;
+        star.z = 0;
+      }
+
+      // Restablecer la transformación para centrar el canvas
+      if (ctx.resetTransform) {
+        ctx.resetTransform();
+      } else {
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+      }
+      ctx.translate(width / 2, height / 2);
+
+      ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
+      ctx.strokeStyle = "white";
+      rafId = requestAnimationFrame(frame);
     }
 
-    ctx.translate(width / 2, height / 2);
-    ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
-    ctx.strokeStyle = "white";
-    rafId = requestAnimationFrame(frame);
-  }
-
-  function frame() {
-    invariant(ctx, "canvas context should not be null");
-    const { clientWidth: width, clientHeight: height } = container;
-
-    for (const star of stars) {
-      star.update(width, height, SPEED);
-      star.draw(ctx);
+    function frame() {
+      invariant(ctx, "canvas context should not be null");
+      const { clientWidth: width, clientHeight: height } = container;
+      for (const star of stars) {
+        star.update(width, height, SPEED);
+        star.draw(ctx);
+      }
+      ctx.fillRect(-width / 2, -height / 2, width, height);
+      rafId = requestAnimationFrame(frame);
     }
-
-    ctx.fillRect(-width / 2, -height / 2, width, height);
-    rafId = requestAnimationFrame(frame);
   }
+
+  // Inicializa el starfield al cargar la página
+  initStarfield();
+
+  // Vuelve a inicializar el starfield en cada navegación client-side
+  document.addEventListener("astro:page-load", initStarfield);
 </script>

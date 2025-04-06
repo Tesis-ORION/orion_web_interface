@@ -1,0 +1,27 @@
+---
+import "../styles/global.css";
+const { title = 'ORION' } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{title}</title>
+    <script is:inline>
+      if (document.startViewTransition) {
+        document.addEventListener('click', e => {
+          const anchor = e.target.closest('a');
+          if (anchor && anchor.href && anchor.origin === location.origin) {
+            e.preventDefault();
+            document.startViewTransition(() => {
+              window.location = anchor.href;
+            });
+          }
+        });
+      }
+    </script>
+  </head>
+  <body>
+    {Astro.slots.default}
+  </body>
+</html>

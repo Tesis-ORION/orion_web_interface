@@ -11,6 +11,17 @@ const demo = defineCollection({
     }),
 });
 
+const about = defineCollection({
+  schema: z.object({
+    name: z.string(),
+    careers: z.array(z.string()),
+    description: z.string(),
+    img: z.string().url(),
+    github: z.string(),
+  }),
+});
+
 export const collections = {
   demo,
+  about,
 };

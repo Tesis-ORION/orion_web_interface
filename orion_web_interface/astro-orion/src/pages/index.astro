@@ -5,17 +5,32 @@ import Splash from "../components/landingPage/splash.astro";
 import Intro from "../components/landingPage/intro.astro";
 import Features from "../components/landingPage/features.astro";
 import Compatibility from "../components/landingPage/tools.astro";
-import Footer from "../components/footer.astro";
+import Footer from "../components/Footer.astro";
 import Demo from '../components/landingPage/demo.astro';
+import { ClientRouter } from "astro:transitions";
 ---
-
-<html lang="es" data-theme="light">
+<html lang="es">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Importa la fuente zen Ace SC desde Google Fonts -->
+    <!-- Script para establecer el tema lo antes posible -->
+    <script is:inline>
+      (function() {
+        const storedTheme = localStorage.getItem("theme") || "light";
+        document.documentElement.dataset.theme = storedTheme;
+      })();
+    </script>
+    <!-- Importa la fuente Zen Dots -->
     <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
     <title>Orion</title>
+    <!-- Script para mantener el tema durante las transiciones -->
+    <script is:inline>
+      document.addEventListener("astro:before-swap", (event) => {
+        event.newDocument.documentElement.dataset.theme = document.documentElement.dataset.theme;
+      });
+    </script>
+    <!-- Activa las view transitions para navegación SPA -->
+    <ClientRouter fallback="swap" />  
   </head>
   <body id="top">
     <Header />

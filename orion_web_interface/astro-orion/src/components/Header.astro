@@ -1,7 +1,7 @@
 ---
-import ThemeSwitcher from '../components/theme-switcher.astro';
+import React from 'react';
+import ThemeSwitcher from '../components/ThemeSwitcher.jsx';
 ---
-
 <style>
   /* Fuente zen */
   .font-zen {
@@ -21,20 +21,21 @@ import ThemeSwitcher from '../components/theme-switcher.astro';
 <header id="page-header" class="fixed top-0 left-0 right-0 z-50">
   <div class="container mx-auto px-4 mt-4">
     <div class="header-box flex justify-between items-center py-4 px-4 rounded-lg">
-      <!-- Al hacer clic en "orion" se desplaza al inicio de la página -->
-      <a href="#top" data-view-transition class="flex items-center uppercase font-bold transition-colors duration-200 font-zen text-[#990A2C]">
+      <a href="/" data-view-transition class="flex items-center uppercase font-bold transition-colors duration-200 font-zen text-[#990A2C]">
         orion
       </a>
-      <!-- Nav items con la misma fuente -->
       <nav class="hidden md:block">
-        <ul class="flex items-right gap-6">
-          <li><a class="text-sm font-zen" href="#intro">Descripcion</a></li>
-          <li><a class="text-sm font-zen" href="#features">Features</a></li>
-          <li><a class="text-sm font-zen" href="#tools">Herramientas</a></li>
-          <li><a class="text-sm font-zen" href="#demo">Demo</a></li>
+        <ul class="flex gap-6">
+          <li><a class="text-sm font-zen" href="#intro" data-view-transition>Descripcion</a></li>
+          <li><a class="text-sm font-zen" href="#features" data-view-transition>Features</a></li>
+          <li><a class="text-sm font-zen" href="#tools" data-view-transition>Herramientas</a></li>
+          <li><a class="text-sm font-zen" href="#demo" data-view-transition>Demo</a></li>
+          <!-- Opción para ir a About -->
+          <li><a class="text-sm font-zen" href="/about" data-view-transition>About</a></li>
         </ul>
       </nav>
-      <ThemeSwitcher />
+      <!-- Renderiza el componente React con hidratación -->
+      <ThemeSwitcher client:load />
     </div>
   </div>
 </header>

@@ -4,19 +4,14 @@
 a,
 .btn {
   @apply transition-colors duration-200;
-  /* Se remueven las utilidades de Tailwind que dependen de la configuración */
-  /* @apply hover:text-secondary; */
-  /* @apply focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-transparent; */
   @apply focus:outline-none;
 }
 
-/* Definir el hover usando la variable del color secundario */
 a:hover,
 .btn:hover {
   color: var(--color-secondary);
 }
 
-/* Definir el focus (ring) usando la variable del color secundario */
 a:focus,
 .btn:focus {
   outline: none;
@@ -27,13 +22,10 @@ a:focus,
   filter: drop-shadow(2px 2px 4px rgba(255, 255, 255, 0.6));
 }
 
-
-
 .gradient-text {
   @apply bg-clip-text text-transparent;
   @apply bg-gradient-to-br from-[#800020] via-[#990A2C] to-[#990A2C];
 }
-
 
 /* Variables de tema para light y dark */
 [data-theme="light"] {
@@ -45,7 +37,7 @@ a:focus,
   --color-background-offset: theme("colors.gray.100");
   --color-border: theme("colors.gray.900/10");
   --header-background: rgba(255, 255, 255, 0.9);
-  --header-border: #000; /* o el color que prefieras */
+  --header-border: #000;
   --icon-color: #000;
 }
 
@@ -57,8 +49,8 @@ a:focus,
   --color-background: theme("colors.gray.900");
   --color-background-offset: theme("colors.gray.800");
   --color-border: theme("colors.gray.50/10");
-  --header-background: rgba(31, 41, 59, 0.9); /* Un fondo oscuro */
-  --header-border: #333; /* O ajusta según prefieras */
+  --header-background: rgba(31, 41, 59, 0.9);
+  --header-border: #333;
   --icon-color: #fff;
 }
 
@@ -77,11 +69,33 @@ a:focus,
 body {
   background-color: var(--color-background);
   color: var(--color-text);
-  transition: background-color 0.3s, color 0.3s; /* Para una transición suave */
+  transition: background-color 0.3s, color 0.3s;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Estado inicial: tarjeta oculta y desplazada hacia abajo */
+.slide-up-init {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* La animación para que aparezca con un slide up */
+@keyframes slideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-up {
+  animation: slideUp 0.5s forwards;
+}
+
+::view-transition-group {
+  transition: transform 4.8s ease-in-out, opacity 4.8s ease-in-out;
 }
 
 

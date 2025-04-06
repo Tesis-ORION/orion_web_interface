@@ -1,0 +1,62 @@
+---
+import { getCollection } from 'astro:content';
+import Header from '../../components/Header.astro';
+import AboutCard from '../../components/about/AboutCard.astro';
+import { ClientRouter } from "astro:transitions";
+import "../../styles/global.css";
+
+// Carga las entradas de la colección "about"
+const posts = await getCollection("about");
+---
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>About Us</title>
+    <!-- Script para establecer el tema lo antes posible -->
+    <script is:inline>
+      (function() {
+        const storedTheme = localStorage.getItem("theme") || "light";
+        document.documentElement.dataset.theme = storedTheme;
+      })();
+    </script>
+    <!-- Script para mantener el tema durante las transiciones -->
+    <script is:inline>
+      document.addEventListener("astro:before-swap", (event) => {
+        event.newDocument.documentElement.dataset.theme = document.documentElement.dataset.theme;
+      });
+    </script>
+    <!-- Importa la fuente Zen Dots -->
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
+    <!-- Activa las view transitions -->
+    <ClientRouter fallback="swap" />
+  </head>
+  <body class="text-center">
+    <Header />
+    <main class="p-4 mt-24">
+      <h1 class="text-3xl font-bold mb-6">About Us</h1>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mx-[300px]">
+        {posts.map(post => (
+          <AboutCard post={post} />
+        ))}
+      </div>
+    </main>
+    <!-- Script para animar las tarjetas de forma secuencial -->
+    <script is:inline>
+      function animateCards() {
+        const cards = document.querySelectorAll('.slide-up-init');
+        cards.forEach((card, index) => {
+          setTimeout(() => {
+            card.classList.add('slide-up');
+          }, index * 200);
+        });
+      }
+
+      document.addEventListener("astro:page-load", animateCards);
+
+      if (document.readyState === "complete") {
+        animateCards();
+      }
+    </script>
+  </body>
+</html>
