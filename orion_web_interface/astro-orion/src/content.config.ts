@@ -21,6 +21,7 @@ const about = defineCollection({
   }),
 });
 
+
 export const collections = {
   demo,
   about,

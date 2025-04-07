@@ -1,0 +1,26 @@
+/* 1) GitHub Markdown CSS import */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.8.1/github-markdown.min.css'); 
+/* 2) Contenedor igual que GitHub, pero fondo transparente para heredar el tuyo */
+.markdown-body {
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 45px;
+  background-color: transparent;
+  color: var(--color-text);
+}
+
+@media (max-width: 767px) {
+  .markdown-body {
+    padding: 15px;
+  }
+}
+
+/* 3) Fuente “Zen Dots” para header y sidebar */
+header,
+aside {
+  font-family: 'Zen Dots', cursive;
+}
+
+

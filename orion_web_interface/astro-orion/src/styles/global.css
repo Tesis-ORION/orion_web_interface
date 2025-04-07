@@ -1,5 +1,34 @@
 @import 'tailwindcss';
 
+/* Variables de tema para light y dark */
+[data-theme="light"] {
+  --color-primary: #990A2C;
+  --color-secondary: theme("colors.indigo.500");
+  --color-text: theme("colors.gray.900");
+  --color-text-offset: theme("colors.gray.600");
+  --color-background: theme("colors.gray.50");
+  --color-background-offset: theme("colors.gray.100");
+  --color-border: theme("colors.gray.900/10");
+  --header-background: rgba(255, 255, 255, 0.9);
+  --header-border: #000;
+  --icon-color: #000;
+  --color-border-blurred: rgba(31, 41, 59, 0.3);
+}
+
+[data-theme="dark"] {
+  --color-primary: #990A2C;
+  --color-secondary: theme("colors.indigo.400");
+  --color-text: theme("colors.gray.50");
+  --color-text-offset: theme("colors.gray.400");
+  --color-background: theme("colors.gray.900");
+  --color-background-offset: theme("colors.gray.800");
+  --color-border: theme("colors.gray.50/10");
+  --header-background: rgba(31, 41, 59, 0.9);
+  --header-border: #333;
+  --icon-color: #fff;
+  --color-border-blurred: rgba(31, 41, 59, 0.9);
+}
+
 /* Estilos globales personalizados */
 a,
 .btn {
@@ -27,32 +56,6 @@ a:focus,
   @apply bg-gradient-to-br from-[#800020] via-[#990A2C] to-[#990A2C];
 }
 
-/* Variables de tema para light y dark */
-[data-theme="light"] {
-  --color-primary: theme("colors.pink.500");
-  --color-secondary: theme("colors.indigo.500");
-  --color-text: theme("colors.gray.900");
-  --color-text-offset: theme("colors.gray.600");
-  --color-background: theme("colors.gray.50");
-  --color-background-offset: theme("colors.gray.100");
-  --color-border: theme("colors.gray.900/10");
-  --header-background: rgba(255, 255, 255, 0.9);
-  --header-border: #000;
-  --icon-color: #000;
-}
-
-[data-theme="dark"] {
-  --color-primary: theme("colors.pink.400");
-  --color-secondary: theme("colors.indigo.400");
-  --color-text: theme("colors.gray.50");
-  --color-text-offset: theme("colors.gray.400");
-  --color-background: theme("colors.gray.900");
-  --color-background-offset: theme("colors.gray.800");
-  --color-border: theme("colors.gray.50/10");
-  --header-background: rgba(31, 41, 59, 0.9);
-  --header-border: #333;
-  --icon-color: #fff;
-}
 
 .icon-astro {
   color: var(--icon-color);
