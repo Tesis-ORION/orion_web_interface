@@ -1,0 +1,50 @@
+---
+import '../../styles/global.css';
+import Header from '../../components/Header.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import Footer from '../../components/footer/Footer.astro';
+import { ClientRouter } from 'astro:transitions';
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo | Orion Web Interface</title>
+
+    <!-- Script para establecer el tema lo antes posible -->
+    <script is:inline>
+      (function() {
+        const t = localStorage.getItem("theme") || "light";
+        document.documentElement.dataset.theme = t;
+      })();
+      document.addEventListener("astro:before-swap", (e) => {
+        e.newDocument.documentElement.dataset.theme =
+          document.documentElement.dataset.theme;
+      });
+    </script>
+
+    <!-- Fuente Zen Dots -->
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet" />
+
+    <!-- Activa las view transitions -->
+    <ClientRouter fallback="swap" />
+  </head>
+
+  <body class="flex flex-col min-h-screen">
+    <!-- Header -->
+    <Header transition:persist transition:animate="none" />
+
+    <!-- Contenedor principal que agrupa el sidebar y el área de contenido vacía -->
+    <div class="flex flex-1">
+      <Sidebar />
+      <main class="flex-1">
+        <!-- Sin contenido -->
+      </main>
+    </div>
+
+    <!-- Footer -->
+    <Footer />
+  </body>
+</html>
