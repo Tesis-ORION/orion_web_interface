@@ -9,6 +9,7 @@ import ImageComponent from '../../components/demo/ImageComponent.jsx';
 import '../../styles/global.css';
 import '../../styles/demo.css';  // Importamos el CSS personalizado
 import ClientRouter from 'astro/components/ClientRouter.astro';
+import JoystickComponent from '../../components/demo/JoystickComponent';
 ---
 
 <html lang="es">
@@ -63,6 +64,15 @@ import ClientRouter from 'astro/components/ClientRouter.astro';
           <ImageComponent client:load title="Imagen de Profundidad" topic="/apc/depth/image_base64" />
         </div>
       </section>
+
+      <!-- Sección Audio: slide desde la izquierda (sale a la derecha) -->
+      <section class="card animate-from-top flex flex-col justify-center items-center mt-5">
+        <div class="card-title">Joystick</div>
+        <div class="card-content">
+          <JoystickComponent client:load />
+        </div>
+      </section>           
+            
 
     </main>
     

@@ -7,21 +7,26 @@ from std_msgs.msg import String
 import cv2
 import base64
 import numpy as np
+from cv_bridge import CvBridge
+
 
 class ImageToBase64Node(Node):
     def __init__(self):
         super().__init__('image_to_base64')
+        self.bridge = CvBridge()
 
-        # Obtener parámetros del launch
-        self.declare_parameter("input_topic", "/apc/left/image_color")
-        self.declare_parameter("output_topic", "/apc/left/image_base64")
+        # Parámetros
+        self.declare_parameter("input_topic", "/image_raw")
+        self.declare_parameter("output_topic", "/image_base64")
+        self.declare_parameter("format_type", "rgb")  # Puede ser "rgb" o "depth"
 
         self.input_topic = self.get_parameter("input_topic").value
         self.output_topic = self.get_parameter("output_topic").value
+        self.format_type = self.get_parameter("format_type").value.lower()
 
-        self.get_logger().info(f"📡 Suscrito a {self.input_topic}, publicando en {self.output_topic}")
+        self.get_logger().info(f"📡 Subscribed to {self.input_topic}, publishing to {self.output_topic}, format: {self.format_type}")
 
-        # Suscribirse al tópico de imagen
+        # Subscriptor y publicador
         self.subscription = self.create_subscription(
             Image,
             self.input_topic,
@@ -29,20 +34,30 @@ class ImageToBase64Node(Node):
             10
         )
 
-        # Publicador de la imagen en Base64
         self.publisher = self.create_publisher(String, self.output_topic, 10)
 
     def image_callback(self, msg):
         try:
-            # Convertir la imagen de ROS 2 a OpenCV
-            np_arr = np.frombuffer(msg.data, dtype=np.uint8).reshape((msg.height, msg.width, 3))
-            img_bgr = np_arr[:, :, ::-1]  # Convertir de BGR a RGB
+            if self.format_type == "depth":
+                # Procesar imagen de profundidad (32FC1)
+                depth_img = self.bridge.imgmsg_to_cv2(msg, desired_encoding='passthrough')
+                depth_img = np.nan_to_num(depth_img, nan=0.0)  # Sustituir NaNs
 
-            # Comprimir la imagen en JPEG y codificarla en Base64
-            _, buffer = cv2.imencode('.jpg', img_bgr)
+                # Normalizar y convertir a 8-bit
+                depth_normalized = np.clip(depth_img / 4.0 * 255.0, 0, 255).astype(np.uint8)
+                depth_colored = cv2.applyColorMap(depth_normalized, cv2.COLORMAP_JET)
+                img_to_encode = depth_colored
+
+            else:
+                # Procesar imagen RGB (8UC3)
+                img_bgr = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
+                img_to_encode = img_bgr
+
+            # Codificar imagen en JPEG y luego a Base64
+            _, buffer = cv2.imencode('.jpg', img_to_encode)
             base64_str = base64.b64encode(buffer).decode('utf-8')
 
-            # Publicar la imagen en Base64
+            # Publicar
             msg_out = String()
             msg_out.data = base64_str
             self.publisher.publish(msg_out)
@@ -50,12 +65,14 @@ class ImageToBase64Node(Node):
         except Exception as e:
             self.get_logger().error(f"❌ Error procesando imagen: {str(e)}")
 
+
 def main(args=None):
     rclpy.init(args=args)
     node = ImageToBase64Node()
     rclpy.spin(node)
     node.destroy_node()
     rclpy.shutdown()
+
 
 if __name__ == '__main__':
     main()
