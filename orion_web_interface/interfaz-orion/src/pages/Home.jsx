@@ -5,12 +5,14 @@ import ImageComponent from "../components/ImageComponent";
 import TwistSubComponent from "../components/TwistSubComponent";
 import JoystickComponent from "../components/JoystickComponent";
 import LidarComponent from "../components/LidarComponent";
+import PoseComponent from "../components/PoseComponent";
 
 const Home = () => {
     return (
       <div>
         <SpeechComponent />
         <LidarComponent rosbridgeUrl="ws://localhost:9090" topicName="/scan"/>
+        <JoystickComponent />
         <div className="image-container">
           <ImageComponent title="Imagen a color" topic="/apc/left/image_base64" />
           <ImageComponent title="Imagen de Profundidad" topic="/apc/depth/image_base64" />

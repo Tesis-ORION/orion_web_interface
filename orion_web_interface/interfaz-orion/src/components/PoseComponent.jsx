@@ -17,7 +17,7 @@ const PoseComponent = () => {
 
     const topic = new ROSLIB.Topic({
       ros: rosInstance,
-      name: "/pose_topic",
+      name: "/pose",
       messageType: "geometry_msgs/Pose",
     });
 
