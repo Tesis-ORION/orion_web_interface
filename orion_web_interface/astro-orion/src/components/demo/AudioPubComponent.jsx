@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { Button } from 'react-bootstrap';
 import { FaMicrophone } from 'react-icons/fa';
-import '../styles/AudioPubComponent.css'; 
+import '../../styles/demo.css';
 
 const AudioPubComponent = () => {
   const [recording, setRecording] = useState(false);
@@ -55,19 +54,19 @@ const AudioPubComponent = () => {
   };
 
   return (
-    <div className="audio-container">
-      <Button
-        className={`record-button ${recording ? 'recording' : ''}`}
+    <div className="audio-container flex flex-col items-center gap-4">
+      <button
         onMouseDown={startRecording}
         onMouseUp={stopRecording}
         onTouchStart={startRecording}
         onTouchEnd={stopRecording}
+        className="audio-pub-button"
       >
-        <FaMicrophone className="microphone-icon" />
-      </Button>
-      <div className="button-text">
+        <FaMicrophone className="text-white text-2xl" />
+      </button>
+      <p className="audio-pub-text text-center">
         {recording ? 'Grabando...' : 'Presiona y mantén para grabar'}
-      </div>
+      </p>
     </div>
   );
 };

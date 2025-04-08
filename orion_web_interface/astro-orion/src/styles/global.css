@@ -7,7 +7,7 @@
   --color-text: theme("colors.gray.900");
   --color-text-offset: theme("colors.gray.600");
   --color-background: theme("colors.gray.50");
-  --color-background-offset: theme("colors.gray.100");
+  --color-background-offset: rgba(220, 220, 220, 0.9);
   --color-border: theme("colors.gray.900/10");
   --header-background: rgba(255, 255, 255, 0.9);
   --header-border: #000;
@@ -26,7 +26,7 @@
   --header-background: rgba(31, 41, 59, 0.9);
   --header-border: #333;
   --icon-color: #fff;
-  --color-border-blurred: rgba(31, 41, 59, 0.9);
+  --color-border-blurred: rgba(125, 125, 125, 0.3);
 }
 
 /* Estilos globales personalizados */
@@ -59,6 +59,8 @@ a:focus,
 
 .icon-astro {
   color: var(--icon-color);
+  font-size: 24px;  /* Ajusta el tamaño del ícono */
+  margin-right: 8px; /* Separación entre el ícono y el texto */
 }
 
 .tool-bg {
@@ -73,6 +75,7 @@ body {
   background-color: var(--color-background);
   color: var(--color-text);
   transition: background-color 0.3s, color 0.3s;
+  
 }
 
 html {

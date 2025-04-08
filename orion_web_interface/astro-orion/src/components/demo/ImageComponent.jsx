@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ROSLIB from "roslib";
+import "../../styles/demo.css"; 
 
 const ImageComponent = ({ title, topic }) => {
   const [imageSrc, setImageSrc] = useState("");
@@ -11,10 +12,9 @@ const ImageComponent = ({ title, topic }) => {
     }
 
     const ros = new ROSLIB.Ros({ url: import.meta.env.VITE_ROS_URL });
-
     const imageListener = new ROSLIB.Topic({
       ros,
-      name: topic, // Debe ser "/apc/left/image_base64"
+      name: topic,
       messageType: "std_msgs/String",
     });
 
@@ -23,7 +23,6 @@ const ImageComponent = ({ title, topic }) => {
         console.error("⚠️ Mensaje de imagen vacío");
         return;
       }
-
       console.log("📸 Imagen Base64 recibida");
       setImageSrc(`data:image/jpeg;base64,${message.data}`);
     });
@@ -32,14 +31,22 @@ const ImageComponent = ({ title, topic }) => {
   }, [topic]);
 
   return (
-    <div className="image-box">
-      <div className="image-box-title">{title}</div>
-      <br />
-      {imageSrc ? (
-        <img src={imageSrc} alt="ROS Stream" width="320" height="240" />
-      ) : (
-        <p>Cargando imagen...</p>
-      )}
+    <div className="image-component flex flex-col h-full w-full">
+      {/* Título fuera del recuadro */}
+      <div className="image-component-title text-center">
+        {title}
+      </div>
+      <div className="image-box">
+        {imageSrc ? (
+          <img
+            src={imageSrc}
+            alt="ROS Stream"
+            style={{ maxWidth: "100%", maxHeight: "100%" }}
+          />
+        ) : (
+          <p>Cargando imagen...</p>
+        )}
+      </div>
     </div>
   );
 };

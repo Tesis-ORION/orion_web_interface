@@ -16,11 +16,8 @@ const SpeechComponent = () => {
     speechTopic.subscribe((message) => {
       setSpeechText((prevText) => {
         if (message.data.startsWith("[ORION]:")) {
-          // Se reinicia el mensaje al detectar "[ORION]:"
           return message.data;
         } else {
-          // Se concatena el mensaje actual al texto previo
-          // Si es el primer mensaje, se elimina "Esperando datos..."
           return prevText === "Esperando datos..." ? message.data : prevText + " " + message.data;
         }
       });
@@ -30,9 +27,10 @@ const SpeechComponent = () => {
   }, []);
 
   return (
-    <div className="border p-3">
-      <h5 className="text-center image-box-title">Tópico Speech</h5>
-      <div className="speech-box">{speechText}</div>
+    <div className="speech-container border p-3 h-full w-full">
+      <div className="speech-box">
+        {speechText}
+      </div>
     </div>
   );
 };

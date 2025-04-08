@@ -24,6 +24,7 @@ const LidarComponent = ({ rosbridgeUrl, topicName }) => {
       setScanData(message);
     });
 
+    // Cleanup
     return () => {
       laserScanTopic.unsubscribe();
       ros.close();
@@ -50,9 +51,9 @@ const LidarComponent = ({ rosbridgeUrl, topicName }) => {
       if (range < scanData.range_max) {
         const angle = angle_min + i * angle_increment;
         // Invertir el eje X
-        const x = centerX - range * scale * Math.cos(angle); // Invertido
+        const x = centerX - range * scale * Math.cos(angle);
         const y = centerY + range * scale * Math.sin(angle);
-        ctx.fillRect(x, y, 2, 2); // Dibuja el punto
+        ctx.fillRect(x, y, 2, 2);
       }
     });
   }, [scanData]);
@@ -62,7 +63,7 @@ const LidarComponent = ({ rosbridgeUrl, topicName }) => {
       ref={canvasRef}
       width={400}
       height={400}
-      style={{ border: "1px solid black" }}
+      className="lidar-box"
     />
   );
 };
