@@ -1,5 +1,6 @@
 import React from "react";
 import "../styles/styles.css";
+import StringPubComponent from "../components/StringPubComponent";
 import SpeechComponent from "../components/SpeechComponent";
 import ImageComponent from "../components/ImageComponent";
 import TwistSubComponent from "../components/TwistSubComponent";
@@ -11,6 +12,7 @@ const Home = () => {
     return (
       <div>
         <SpeechComponent />
+        <StringPubComponent/>
         <LidarComponent rosbridgeUrl="ws://localhost:9090" topicName="/scan"/>
         <JoystickComponent />
         <div className="image-container">
