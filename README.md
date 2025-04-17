@@ -1,10 +1,11 @@
 # orion_web_interface
 [![language](https://img.shields.io/badge/language-react-239120)](#)
+[![framework](https://img.shields.io/badge/framework-astro-239120)](#)
 [![OS](https://img.shields.io/badge/OS-Ubuntu_24.04-0078D4)](#)
 [![CPU](https://img.shields.io/badge/CPU-x86%2C%20x64%2C%20ARM%2C%20ARM64-FF8C00)](#)
 [![GitHub release](https://img.shields.io/badge/release-v2.0.15-4493f8)](#)
 [![GitHub release date](https://img.shields.io/badge/release_date-february_2025-96981c)](#)
-[![GitHub last commit](https://img.shields.io/badge/last_commit-march_2025-96981c)](#)
+[![GitHub last commit](https://img.shields.io/badge/last_commit-april_2025-96981c)](#)
 
 ⭐ Star us on GitHub — it motivates us a lot!
 
