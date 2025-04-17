@@ -1,0 +1,81 @@
+---
+// Importaciones de componentes y otros recursos
+import Header from '../../components/Header.astro';
+import Footer from '../../components/footer/Footer.astro';
+import SpeechComponent from '../../components/demo/SpeechComponent.jsx';
+import AudioPubComponent from '../../components/demo/AudioPubComponent.jsx';
+import LidarComponent from '../../components/demo/LidarComponent.jsx';
+import ImageComponent from '../../components/demo/ImageComponent.jsx';
+import '../../styles/global.css';
+import '../../styles/demo.css';  // Importamos el CSS personalizado
+import ClientRouter from 'astro/components/ClientRouter.astro';
+import JoystickComponent from '../../components/demo/JoystickComponent';
+---
+
+<html lang="es">
+  <head>
+    <title>Demo Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet" />
+
+    <script is:inline>
+      (function() {
+        const t = localStorage.getItem("theme") || "light";
+        document.documentElement.dataset.theme = t;
+      })();
+    </script>
+    <ClientRouter />
+  </head>
+  <body class="flex flex-col min-h-screen bg-white text-black dark:bg-gray-900 dark:text-white">
+    <Header />
+    
+    <!-- Contenedor de la sección principal -->
+    <main class="flex-grow p-4 grid grid-cols-1 md:grid-cols-2 gap-4 pt-20 mr-14 ml-14">
+      
+      <!-- Sección Audio: slide desde la izquierda (sale a la derecha) -->
+      <section class="card animate-from-top flex flex-col justify-center items-center mt-5">
+        <div class="card-title">Audio Recorder</div>
+        <div class="card-content">
+          <AudioPubComponent client:load />
+        </div>
+      </section>           
+      
+      <!-- Sección Speech: slide desde arriba (desliza hacia abajo) -->
+      <section class="card animate-from-right flex flex-col justify-center items-center mt-5">
+        <div class="card-title">Speech</div>
+        <div class="card-content">
+          <SpeechComponent client:load />
+        </div>
+      </section>
+           
+      <!-- Sección Lidar: slide desde abajo (desliza hacia arriba) -->
+      <section class="card animate-from-left flex flex-col justify-center items-center">
+        <div class="card-title">Lidar</div>
+        <div class="card-content">
+          <LidarComponent client:load rosbridgeUrl="ws://localhost:9090" topicName="/scan" />
+        </div>
+      </section>
+
+      <!-- Sección Imágenes: slide desde la derecha (desliza hacia la izquierda) -->
+      <section class="card animate-from-bottom grid grid-cols-2 gap-4 h-full">
+        <div class="flex flex-col items-center h-full">
+          <ImageComponent client:load title="Imagen a color" topic="/apc/left/image_base64" />
+        </div>
+        <div class="flex flex-col items-center h-full">
+          <ImageComponent client:load title="Imagen de Profundidad" topic="/apc/depth/image_base64" />
+        </div>
+      </section>
+
+      <!-- Sección Audio: slide desde la izquierda (sale a la derecha) -->
+      <section class="card animate-from-top flex flex-col justify-center items-center mt-5">
+        <div class="card-title">Joystick</div>
+        <div class="card-content">
+          <JoystickComponent client:load />
+        </div>
+      </section>           
+            
+
+    </main>
+    
+    <Footer />
+  </body>
+</html>

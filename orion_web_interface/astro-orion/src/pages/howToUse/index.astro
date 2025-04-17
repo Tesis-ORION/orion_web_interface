@@ -1,0 +1,133 @@
+---
+import '../../styles/global.css';
+import '../../styles/markdown.css';
+import Header from '../../components/Header.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import Footer from '../../components/footer/Footer.astro';
+import { ClientRouter, slide } from 'astro:transitions';
+import { Markdown } from 'astro-remote';
+
+// 1) Función slugify (mismo que en el cliente)
+function slugify(text: string) {
+  return text
+    .toString()
+    .trim()
+    .toLowerCase()
+    .replace(/^[^a-z0-9]+/, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+// 2) Trae el README.md crudo
+const res = await fetch(
+  'https://raw.githubusercontent.com/Tesis-ORION/orion_web_interface/main/README.md'
+);
+const markdownContent = await res.text();
+
+// 3) Extrae los encabezados de nivel 2 y construye sidebarItems
+const headingRegex = /^##\s*(.+)$/gm;
+const matches = [...markdownContent.matchAll(headingRegex)];
+const sidebarItems = matches.map(([, raw]) => {
+  // Quita emojis o caracteres no alfanuméricos al inicio
+  const label = raw.replace(/^[^a-zA-Z0-9]+/, '').trim();
+  const slug = slugify(label);
+  return { href: `#${slug}`, label };
+});
+
+// 4) Para destacar el item activo
+const currentHash = Astro.url.hash;
+---
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Tema temprano: carga/recarga y transiciones -->
+    <script is:inline>
+      (function() {
+        const t = localStorage.getItem("theme") || "light";
+        document.documentElement.dataset.theme = t;
+      })();
+      document.addEventListener("astro:before-swap", e => {
+        e.newDocument.documentElement.dataset.theme =
+          document.documentElement.dataset.theme;
+      });
+    </script>
+
+    <!-- Fuente Zen Dots -->
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet" />
+
+    <title>How to Use | Orion Web Interface</title>
+    <ClientRouter fallback="swap" />
+  </head>
+
+  <body id="top" class="flex flex-col">
+    <Header transition:persist transition:animate="none" />
+
+    <div class="flex items-start">
+      <!-- 5) Sidebar con items dinámicos -->
+      <Sidebar items={sidebarItems} currentHash={currentHash} />
+
+      <main transition:animate={slide({ duration: '0.5s' })} class="flex-1 px-8 py-32">
+        <article class="markdown-body">
+          <Markdown content={markdownContent} />
+        </article>
+      </main>
+    </div>
+
+    <Footer />
+
+    <!-- Script para asignar IDs y scroll offset -->
+    <script is:inline data-astro-rerun>
+      document.addEventListener('astro:page-load', () => {
+        const slugify = text =>
+          text
+            .toString()
+            .trim()
+            .toLowerCase()
+            .replace(/^[^a-z0-9]+/, '')
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/-+/g, '-')
+            .replace(/^-+|-+$/g, '');
+
+        // 1) Asigna IDs a h1–h6
+        document
+          .querySelectorAll('.markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4, .markdown-body h5, .markdown-body h6')
+          .forEach(el => {
+            if (!el.id) el.id = slugify(el.textContent);
+          });
+
+        // 2) Calcula altura del header
+        const header = document.querySelector('header');
+        const headerHeight = header ? header.offsetHeight : 0;
+
+        // 3) Scroll con offset para todos los enlaces internos
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+          a.addEventListener('click', e => {
+            const raw = a.getAttribute('href').slice(1);
+            const targetId = raw.replace(/^[-]+/, '');
+            const el = document.getElementById(targetId);
+            if (el) {
+              e.preventDefault();
+              const y = el.getBoundingClientRect().top + window.scrollY - headerHeight;
+              window.scrollTo({ top: y, behavior: 'smooth' });
+              history.replaceState(null, '', `#${targetId}`);
+            }
+          });
+        });
+
+        // 4) Si cargas con hash en la URL
+        if (location.hash) {
+          const id = location.hash.slice(1).replace(/^[-]+/, '');
+          const el = document.getElementById(id);
+          if (el) {
+            const y = el.getBoundingClientRect().top + window.scrollY - headerHeight;
+            window.scrollTo({ top: y, behavior: 'auto' });
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

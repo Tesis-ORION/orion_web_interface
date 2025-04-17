@@ -1,0 +1,24 @@
+---
+import { Icon } from "astro-icon/components";
+import ContentSection from "./content-section.astro";
+---
+
+<ContentSection title="Un robot para todos!" id="intro">
+  <Fragment slot="lead">
+    Orion es un robot <span class="gradient-text">Open-source</span> y <span class="gradient-text">Low-cost</span>
+    creado para que las personas puedan aprender, investigar, entretenerse y
+
+    mucho mas!!
+  </Fragment>
+  <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
+    <a
+      href="https://github.com/Tesis-ORION"
+      class="sm:col-span-2 flex items-center justify-center gap-3 border-2 border-current px-6 py-4 mx-auto transition-colors duration-200 hover:bg-red-500"
+
+    >
+      <Icon name="mdi:github" class="size-8" />
+      <span>Read the docs</span>
+    </a>
+    
+  </div>
+</ContentSection>

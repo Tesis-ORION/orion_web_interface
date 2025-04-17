@@ -1,0 +1,54 @@
+@import './global.css';
+
+/* Sidebar estilo documentación */
+.sidebar {
+  @apply hidden lg:block;
+
+  /* ancho fijo y altura completa */
+  width: 12.5rem;
+  height: 100vh;
+
+  /* sticky justo debajo del header */
+  position: sticky;
+  top: 4rem; /* ajusta según la altura de tu header */
+
+  /* Sin fondo */
+  background: transparent;
+  backdrop-filter: none;
+
+  /* Borde derecho visible */
+  border-right: 1px solid var(--color-border-blurred);
+
+  /* padding interno */
+  padding: 1rem 0;
+
+  /* scroll si es necesario */
+  overflow-y: auto;
+}
+
+.sidebar ul {
+  @apply space-y-1;
+}
+
+.sidebar li a {
+  @apply block px-4 py-2 text-sm transition-colors duration-200;
+  /* Fuente Zen */
+  font-family: "Zen Dots", sans-serif;
+  color: var(--color-text);
+  border-left: 4px solid transparent;
+}
+
+.sidebar li a:hover {
+  /* Hover en rojo (tu color primario) */
+  color: var(--color-primary);
+  border-left-color: var(--color-primary);
+  background: none;
+}
+
+/* Estado activo */
+.sidebar li a[aria-current="page"],
+.sidebar li a.active {
+  @apply font-bold;
+  color: var(--color-primary);
+  border-left-color: var(--icon-color);
+}

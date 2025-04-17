@@ -1,0 +1,22 @@
+---
+// src/components/Sidebar.astro
+import '../styles/sidebar.css';
+const { items = [], currentHash = '' } = Astro.props;
+---
+<aside class="sidebar">
+  <nav>
+    <ul>
+      {items.map((item: { href: string | URL | null | undefined; label: unknown; }) => (
+        <li>
+          <a
+            href={item.href}
+            data-view-transition
+            aria-current={currentHash === item.href ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</aside>

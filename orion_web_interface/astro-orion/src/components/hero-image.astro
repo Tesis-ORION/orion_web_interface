@@ -1,0 +1,15 @@
+---
+import { Image } from "astro:assets";
+import footerImage from "../assets/footer-image.png";
+
+const widths = [450, 800, 1200];
+const sizes = "100vw";
+---
+
+<Image
+  class="h-full w-full object-cover"
+  src={footerImage}
+  widths={widths}
+  sizes={sizes}
+  alt="The ridged surface of the moon"
+/>

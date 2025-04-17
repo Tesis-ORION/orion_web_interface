@@ -1,0 +1,53 @@
+---
+import CompatibilityList from "./tool-list.astro";
+import ContentSection from "./content-section.astro";
+import type { CompatibilityItem } from "../../types";
+
+const frameworks: Array<CompatibilityItem> = [
+  {
+    title: "React",
+    icon: "fa-brands:react",
+    url: "https://reactjs.org/",
+  },
+  {
+    title: "Astro",
+    icon: "lineicons:astro",
+    url: "https://astro.build/",
+  },
+  {
+    title: "Ros2",
+    icon: "skill-icons:ros-light",
+    url: "https://docs.ros.org/en/jazzy/index.html",
+  },
+];
+
+const platforms: Array<CompatibilityItem> = [
+  {
+    title: "AWS",
+    icon: "fa-brands:aws",
+    url: "https://aws.amazon.com/",
+  },
+  {
+    title: "GitHub",
+    icon: "fa-brands:github",
+    url: "https://pages.github.com/",
+  },
+];
+---
+
+<ContentSection title="Herramientas" id="tools">
+  <Fragment slot="lead">
+    El proyecto Orion esta construido con herramientas de uso <span class="gradient-text">gratuito</span> 
+    para que cualquier persona pueda aprender y contribuir al proyecto.
+  </Fragment>
+  <CompatibilityList
+    items={frameworks}
+    title="Frameworks"
+    url=""
+  />
+  <CompatibilityList
+    items={platforms}
+    title="Platformas"
+    url=""
+  />
+</ContentSection>

@@ -1,0 +1,183 @@
+@import './global.css';
+/* Tarjeta base para cada componente */
+.card {
+    /* Borde visible */
+    border: 1px solid var(--color-border);
+    /* Fondo más claro que el fondo global (usa la variable definida en global.css) */
+    background-color: var(--color-background-offset);
+    /* Espaciado interno y redondeo */
+    padding: 1rem;
+    border-radius: 0.5rem;
+    /* Sutil sombra */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Estilo para el título de cada tarjeta */
+  .card-content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem; /* Puedes ajustar si es necesario */
+  }
+  
+  /* Estilo para el contenido de la tarjeta */
+  .card-content {
+    font-size: 0.95rem;
+    padding: 0.5rem;
+    color: var(--color-text-offset);
+  }
+
+  .card-title {
+    font-size: 1.125rem;
+    font-weight: bold;
+    background-color: var(--color-background-offset); /* o el color que prefieras */
+    color: var(--color-text);
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+
+/* demo.css */
+
+.image-component {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .image-component-title {
+    font-size: 1.125rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: var(--color-text);
+    /* Se mantiene su altura según el contenido */
+    flex: 0 0 auto;
+  }
+  
+  .image-box {
+    flex: 1 1 auto;           /* Ocupa el espacio restante */
+    width: 100%;
+    border: 2px solid var(--color-border-blurred);  /* Borde visible */
+    background-color: var(--color-background-offset);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    display: flex;            /* Para centrar el contenido dentro del recuadro */
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  .lidar-box {
+    display: block;                /* Asegura que se rinda como bloque */
+    border: 2px solid var(--color-border-blurred);
+    background-color: white;       /* Fondo blanco siempre */
+    box-sizing: border-box;
+    width: 400px;                  /* Respeta el ancho definido en el componente */
+    height: 400px;                 /* Igual para la altura */
+  }
+
+  .audio-pub-button {
+    background-color: var(--color-primary); /* Color principal del global */
+    color: white;
+    width: 10rem;         /* w-40 equivale aproximadamente a 10rem */
+    height: 4rem;         /* h-16 equivale a 4rem */
+    border-radius: 9999px; /* Botón redondo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    border: 1px solid var(--color-border); /* Puedes ajustar o usar un color fijo como #1b70f841 si lo prefieres */
+    /* Efecto 3D: estado normal */
+    box-shadow: 0 10px 0 0 #7d0823, 0 15px 0 0 #65061b;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  
+  /* Estado activo: se desplaza hacia abajo y el box-shadow se remueve */
+  .audio-pub-button:active {
+    transform: translateY(0.5rem); /* Equivalente a active:translate-y-2 */
+    box-shadow: 0 0 0 0 #1b6ff8, 0 0 0 0 #1b70f841;
+  }
+  
+  /* Estilo para el texto debajo del botón */
+  .audio-pub-text {
+    margin-top: 0.5rem;
+    font-weight: bold;
+    font-size: 1.125rem;
+    color: var(--color-text);
+  }
+
+  .speech-container {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid var(--color-border-blurred);
+    height: 100%;
+    width: 100%;
+    /* Aumenta la altura mínima para que el componente sea más alto */
+    min-height: 7rem;  /* Puedes ajustar este valor según tu diseño */
+    /* Reduce el padding vertical para que el borde superior e inferior sean menos prominentes */
+    padding: 0.1rem 0;
+  }
+  
+  /* Área que muestra el texto con scroll vertical si es necesario */
+  .speech-box {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 0.5rem;
+    /* Fuerza que el texto tenga el color definido en la variable global */
+    color: var(--color-text);
+  }
+
+  /* Slide a la derecha: por ejemplo, entra desde la derecha hasta su posición */
+  @keyframes slideFromLeft {
+    from { transform: translateX(-100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  
+  /* Lidar: slide desde abajo hacia arriba */
+  @keyframes slideFromBottom {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  
+  /* Imágenes: slide desde la derecha hacia la izquierda */
+  @keyframes slideFromRight {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  
+  /* Speech: slide desde arriba hacia abajo */
+  @keyframes slideFromTop {
+    from { transform: translateY(-100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .animate-from-top {
+    animation: slideFromTop 0.3s ease-out forwards;
+  }
+    
+  .animate-from-left {
+    animation: slideFromLeft 0.3s ease-out forwards;
+    animation-delay: 0.2s;
+  }
+  
+  .animate-from-bottom {
+    animation: slideFromBottom 0.3s ease-out forwards;
+    animation-delay: 0.4s;
+  }
+  
+  .animate-from-right {
+    animation: slideFromRight 0.3s ease-out forwards;
+    animation-delay: 0.5s;
+  }
+  
+  
+
+.animate-from-left,
+.animate-from-bottom,
+.animate-from-right,
+.animate-from-top {
+  opacity: 0;
+}

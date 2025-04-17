@@ -1,0 +1,107 @@
+@import 'tailwindcss';
+
+/* Variables de tema para light y dark */
+[data-theme="light"] {
+  --color-primary: #990A2C;
+  --color-secondary: theme("colors.indigo.500");
+  --color-text: theme("colors.gray.900");
+  --color-text-offset: theme("colors.gray.600");
+  --color-background: theme("colors.gray.50");
+  --color-background-offset: rgba(220, 220, 220, 0.9);
+  --color-border: theme("colors.gray.900/10");
+  --header-background: rgba(255, 255, 255, 0.9);
+  --header-border: #000;
+  --icon-color: #000;
+  --color-border-blurred: rgba(31, 41, 59, 0.3);
+}
+
+[data-theme="dark"] {
+  --color-primary: #990A2C;
+  --color-secondary: theme("colors.indigo.400");
+  --color-text: theme("colors.gray.50");
+  --color-text-offset: theme("colors.gray.400");
+  --color-background: theme("colors.gray.900");
+  --color-background-offset: theme("colors.gray.800");
+  --color-border: theme("colors.gray.50/10");
+  --header-background: rgba(31, 41, 59, 0.9);
+  --header-border: #333;
+  --icon-color: #fff;
+  --color-border-blurred: rgba(125, 125, 125, 0.3);
+}
+
+/* Estilos globales personalizados */
+a,
+.btn {
+  @apply transition-colors duration-200;
+  @apply focus:outline-none;
+}
+
+a:hover,
+.btn:hover {
+  color: var(--color-secondary);
+}
+
+a:focus,
+.btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px transparent, 0 0 0 4px var(--color-secondary);
+}
+
+.text-shadow {
+  filter: drop-shadow(2px 2px 4px rgba(255, 255, 255, 0.6));
+}
+
+.gradient-text {
+  @apply bg-clip-text text-transparent;
+  @apply bg-gradient-to-br from-[#800020] via-[#990A2C] to-[#990A2C];
+}
+
+
+.icon-astro {
+  color: var(--icon-color);
+  font-size: 24px;  /* Ajusta el tamaño del ícono */
+  margin-right: 8px; /* Separación entre el ícono y el texto */
+}
+
+.tool-bg {
+  background-color: var(--color-background);
+}
+
+.tool-border {
+  border-color: var(--color-border);
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  transition: background-color 0.3s, color 0.3s;
+  
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Estado inicial: tarjeta oculta y desplazada hacia abajo */
+.slide-up-init {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* La animación para que aparezca con un slide up */
+@keyframes slideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-up {
+  animation: slideUp 0.5s forwards;
+}
+
+::view-transition-group {
+  transition: transform 4.8s ease-in-out, opacity 4.8s ease-in-out;
+}
+
+
