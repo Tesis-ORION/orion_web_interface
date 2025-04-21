@@ -1,41 +1,39 @@
 ---
 import { Image } from "astro:assets";
-import astronautImage from "../../assets/astronaut.png";
+import logoORIONImage from "../../assets/logoORION.png";
 import Starfield from "./starfield.astro";
 
 const widths = [450, 800];
 const sizes = "(min-width: 640px) 42vw, 67vw";
 ---
 
-<section class="relative h-full bg-black">
+<section class="relative bg-black h-[calc(70vh-4rem)]">
   <Starfield />
-  <div id="splash-bg-fallback" class="absolute inset-0 hidden opacity-40">
-  </div>
-  <div class="relative grid h-full place-items-center sm:grid-cols-2">
-    <h2
-      class="flex flex-col items-center gap-2 self-end sm:gap-4 sm:self-auto sm:justify-self-end"
-    >
-    <div class="gradient-text text-center font-extrabold tracking-tighter text-6xl md:text-8xl text-red-500 text-shadow">
-      HRI Robot
-        <br /> Low cost,
-        <br /> Open Source.
-      </div>
+  <div class="relative flex flex-col sm:flex-row items-center justify-center h-full gap-50">
+    
+    <!-- TEXTO -->
+    <h2 class="text-center gradient-text font-extrabold tracking-tighter text-6xl md:text-8xl text-red-500 text-shadow">
+      HRI Robot<br/>
+      Low cost,<br/>
+      Open Source.
     </h2>
-    <div
-      id="astronaut"
-      class="w-2/3 max-w-3xl self-start sm:w-10/12 sm:self-auto sm:justify-self-start"
-    >
+
+    <!-- LOGO -->
+    <div id="logoORION" class="w-2/3 max-w-md animate-float">
       <Image
-        class="h-full w-full object-cover"
-        src={astronautImage}
+        class="w-full h-auto object-cover"
+        src={logoORIONImage}
         widths={widths}
         sizes={sizes}
         loading="eager"
-        alt="A floating astronaut in a space suit"
+        alt="A floating logoORION in a space suit"
       />
     </div>
+
   </div>
 </section>
+
+
 
 <noscript>
   <style>
@@ -44,6 +42,7 @@ const sizes = "(min-width: 640px) 42vw, 67vw";
     }
   </style>
 </noscript>
+
 
 <style>
   @keyframes float {
@@ -55,13 +54,18 @@ const sizes = "(min-width: 640px) 42vw, 67vw";
       transform: translate3d(0, 30px, 0);
     }
   }
+  #logoORION img {
+    max-width: 300px;
+    height: auto;
+  }
 
-  #astronaut {
+  #logoORION {
     animation: float linear 2.5s infinite alternate;
+    margin-top: -75px;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    #astronaut {
+    #logoORION {
       @apply animate-none;
     }
 
